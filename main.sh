@@ -47,7 +47,6 @@ printf "\n"
 }
 
 #Vérification des commandes présentes sur l'env
-command -v pidof &>/dev/null || { echo "[!] pidof needs to be installed."; exit 1 ; }
 command -v curl &>/dev/null || { echo "[!] curl needs to be installed.";  exit 1 ; }
 command -v mplayer &>/dev/null || { echo "[!] mplayer needs to be installed."; exit 1 ; }
 
