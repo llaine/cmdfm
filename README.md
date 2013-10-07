@@ -3,6 +3,7 @@
 **REQUIREMENTS**
 
 [curl](http://curl.haxx.se/)
+
 [mplayer](http://doc.ubuntu-fr.org/mplayer)
 
 
@@ -13,8 +14,8 @@ Run the script
 `./main.sh [genre]`
 
 
-**The genres**
-*
+**LIST OF GENRES**
+
 80s                 Abstract            Acid Jazz
 Acoustic Rock       Alternative         Ambient
 Ballads             Blues               Blues Rock
@@ -38,4 +39,3 @@ Rock                Rock 'n' Roll       Shoegaze
 Smooth Jazz         Soul                Synth Pop
 Techno              Thrash Metal        Trance
 Trip-hop            Turntablism         Underground
-*
