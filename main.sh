@@ -1,4 +1,8 @@
 #!/bin/bash
+# jukebox terminal 
+# @creator: darksioul
+# @contact: darksioul6@gmail.com
+# @license: MIT
 listGenres() {
 	echo "
 80s                 Abstract            Acid Jazz
