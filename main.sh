@@ -6,29 +6,33 @@
 #
 listGenres() {
 	echo "
-80s                 Abstract            Acid Jazz
-Acoustic Rock       Alternative         Ambient
-Ballads             Blues               Blues Rock
-Chillout            Chiptunes           Choir
-Classical           Classical Guitar    Contemporary
-Dancehall           Death Metal         Dirty South
-Dream Pop           Drum & Bass         Dub
-Easy Listening      Electro House       Electronic
-Electronic Rock     Folk Rock           Funk
-Grime               Grindcore           Grunge
-Hardcore            Heavy Metal         Hip-Hop
-Indie               Indie Pop           Industrial Metal
-Instrumental Rock   J-Pop               Jazz
-Jazz Fusion         K-Pop               Latin Jazz
-Minimal             Modern Jazz         Moombahton
-Nu Jazz             Opera               Orchestral
-Pop                 Post Hardcore       Post Rock
-Progressive Metal   Progressive Rock    Punk
-Rap                 Reggae              Reggaeton
-Rock                Rock 'n' Roll       Shoegaze
-Smooth Jazz         Soul                Synth Pop
-Techno              Thrash Metal        Trance
-Trip-hop            Turntablism         Underground
+80s                 Abstract            Acid Jazz           
+Acoustic            Acoustic Rock       African             Alternative         
+Ambient             Americana           Arabic              Avantgarde          
+Bachata             Ballads             Bhangra             Blues               
+Blues Rock          Bossa Nova          Breakbeats          Chanson             
+Chillout            Chiptunes           Choir               Classic Rock        
+Classical           Classical Guitar    Contemporary        Country             
+Cumbia              Dance               Dancehall           Death Metal         
+Dirty South         Disco               Dream Pop           Drum & Bass         
+Dub                 Dubstep             Easy Listening      Electro House       
+Electronic          Electronic Pop      Electronic Rock     Folk                
+Folk Rock           Funk                Glitch              Gospel              
+Grime               Grindcore           Grunge              Hard Rock           
+Hardcore            Heavy Metal         Hip-Hop             House               
+Indie               Indie Pop           Industrial Metal    Instrumental        
+Instrumental Rock   J-Pop               Jazz                Jazz Funk           
+Jazz Fusion         K-Pop               Latin               Latin Jazz          
+Mambo               Metalcore           Middle Eastern      Minimal             
+Modern Jazz         Moombahton          New Wave            Nu Jazz             
+Opera               Orchestral          Piano               Pop                 
+Post Hardcore       Post Rock           Progressive House   Progressive Metal   
+Progressive Rock    Punk                R&B                 Rap                 
+Reggae              Reggaeton           Riddim              Rock                
+Rock 'n' Roll       Salsa               Samba               Shoegaze            
+Singer / Songwriter Smooth Jazz         Soul                Synth Pop           
+Tech House          Techno              Thrash Metal        Trance              
+Trap                Trip-hop            Turntablism         Underground        
 "
 printf "\n"
 }
