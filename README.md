@@ -1,4 +1,4 @@
-#cmdfm
+#cmdfm native jukebox
 
 **REQUIREMENTS**
 
