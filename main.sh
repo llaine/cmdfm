@@ -2,6 +2,7 @@
 # the jukebox terminal based on cmd.fm 
 #
 # @author: darksioul
+# @license: MIT
 # @contact: darksioul6@gmail.com
 #
 listGenres() {
