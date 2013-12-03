@@ -6,17 +6,17 @@
 
 [mplayer](http://doc.ubuntu-fr.org/mplayer)
 
-Unix system
-
+A unix system
 
 **HOW TO**
 
 Run the script 
-
+`chmod +x main.sh`
 `./main.sh [genre]`
 
-
 **LIST OF GENRES**
+
+`.main.sh g`
 
 80s                 Abstract            Acid Jazz
 Acoustic Rock       Alternative         Ambient
@@ -41,3 +41,4 @@ Rock                Rock 'n' Roll       Shoegaze
 Smooth Jazz         Soul                Synth Pop
 Techno              Thrash Metal        Trance
 Trip-hop            Turntablism         Underground
+

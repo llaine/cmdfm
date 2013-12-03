@@ -1,8 +1,9 @@
 #!/bin/bash
-# jukebox terminal 
-# @creator: darksioul
+# the jukebox terminal based on cmd.fm 
+#
+# @author: darksioul
 # @contact: darksioul6@gmail.com
-# @license: MIT
+#
 listGenres() {
 	echo "
 80s                 Abstract            Acid Jazz
@@ -42,18 +43,25 @@ printf "\n"
 
 action() {
 	echo "
-p/pause              # to pause the track
-s/e/stop/exit        # to stop and exit the track and the programm
-d/download           # to download the current song
-n/next  			 # go next track
+Welcome to the CLI jukebox ! 
+
+Here are the available commands :
++-------------------------+
+|p => Pause the track     |
++-------------------------+
+|s => Exit the jukebox    |
++-------------------------+
+|d => To download the song|
++-------------------------+
+|n => Next song           |
++-------------------------+
 "
 printf "\n"
 }
 
-#Vérification des commandes présentes sur l'env
+#Check the evt
 command -v curl &>/dev/null || { echo "[!] curl needs to be installed.";  exit 1 ; }
 command -v mplayer &>/dev/null || { echo "[!] mplayer needs to be installed."; exit 1 ; }
-
 
 arg1=$@
 case $arg1 in
@@ -64,61 +72,51 @@ case $arg1 in
 		listGenres
 		;;
 	*)
-		theGenre="$arg1"
-		lesInfos=`./getInfoSong.sh $theGenre`
-
-		#Récupération du genre
-		IFS='||' read -a songInfo <<< "$lesInfos"
-
-		#Vérification du genre
-		if [[ -z $songInfo ]]; then
-			echo "Genre inconnu"
-			exit 1
-
-		fi
-
 		action
-		
-		title="${songInfo[0]}"
-		genre="${songInfo[2]}"
-		streamUrl="${songInfo[4]}"
-		
-		mkfifo /tmp/mplayer-control &>/dev/null
-		mplayer -slave -input file=/tmp/mplayer-control $streamUrl?client_id=2cd0c4a7a6e5992167a4b09460d85ece &>/dev/null  &
+		while [[ true ]]; do
+			thePID=$(pidof 'mplayer')
+			if [[ -z "${thePID[@]}" ]]; then
+				theGenre="$arg1"
+				lesInfos=`./getInfoSong.sh $theGenre`
+				IFS='||' read -a songInfo <<< "$lesInfos"
+				if [[ -z $songInfo ]]; then
+					echo "unknow genre"
+					exit 1
+				fi
 
-		echo "Now playing .... $title"
-		
-		while [[ 1 ]]; do
-			echo -n "> " ; read -r action
-			case $action in
-				"pause" | "p")
-					echo "pause" > /tmp/mplayer-control
-					;;
-				"stop" | "s" | "exit" | "e")
-					echo "quit" > /tmp/mplayer-control
-					echo "Bye ! "
-					break
-					;;
-				"download" | "d")
-					urlSong=`./getUrlSong.sh $title`
-					./download.sh $urlSong
-					;;
-				"next" | "n")
-					echo "quit" > /tmp/mplayer-control
-					lesInfos=`./getInfoSong.sh $theGenre`
-					#Récupération du genre
-					IFS='||' read -a songInfo <<< "$lesInfos"
+				title="${songInfo[0]}"
+				genre="${songInfo[2]}"
+				streamUrl="${songInfo[4]}"
+				duration="${songInfo[6]}"
+				durationSecondes=$(($duration / 1000))
+				durationMin=$(($duration / (1000 * 60)))
 
-					title="${songInfo[0]}"
-					genre="${songInfo[2]}"
-					streamUrl="${songInfo[4]}"
-					
-					mkfifo /tmp/mplayer-control &>/dev/null
-					mplayer -slave -input file=/tmp/mplayer-control $streamUrl?client_id=2cd0c4a7a6e5992167a4b09460d85ece &>/dev/null  &
+				printf "\n"
+				echo "Now playing : $title"
+				echo "Song duration : $durationMin min and $durationSecondes sec"
 
-					echo "Now playing .... $title"
-					;;
-			esac
+			    process=$(./play.sh $streamUrl)
+
+			    while [[ true ]]; do
+			    	read -p ">" -t$durationSecondes
+			    	if [[ $REPLY = "s" ]]; then
+			    		echo "quit" > /tmp/mplayer-control
+			    		echo "Bye ! "
+						break 2
+				    elif [[ $REPLY = "p" ]]; then
+				    	echo "pause" > /tmp/mplayer-control
+				    elif [[ $REPLY = "d" ]]; then
+				    	urlSong=`./getUrlSong.sh $title`
+						./download.sh $urlSong
+				    elif [[ $REPLY = "n" ]]; then
+				    	echo "quit" > /tmp/mplayer-control
+				    	echo "Fetching next song ..."
+						break 1
+					else
+			    		break 1
+			    	fi
+			    done
+			fi
 		done
 		;;
 esac
