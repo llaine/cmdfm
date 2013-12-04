@@ -67,6 +67,7 @@ printf "\n"
 #Check the evt
 command -v curl &>/dev/null || { echo "[!] curl needs to be installed.";  exit 1 ; }
 command -v mplayer &>/dev/null || { echo "[!] mplayer needs to be installed."; exit 1 ; }
+command -v pidof &>/dev/null || { echo "[!] pidof needs to be installed."; exit 1 ; }
 
 arg1=$@
 case $arg1 in
