@@ -99,7 +99,7 @@ case $arg1 in
 
 				printf "\n"
 				echo "Now playing : $title"
-				echo "Song duration : $durationMin min and $durationSecondes sec"
+				echo "Song duration : $durationMin min or $durationSecondes sec"
 
 			    process=$(./play.sh $streamUrl)
 
