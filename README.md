@@ -6,6 +6,10 @@
 
 [mplayer](http://doc.ubuntu-fr.org/mplayer)
 
+[pidof](http://www.linux-kheops.com/doc/man/manfr/man-html-0.9/man8/pidof.8.html)
+
+pidof : `ps axc|awk "{if (\$5==\"$1\") print \$1}";`
+
 A unix system
 
 **HOW TO**
