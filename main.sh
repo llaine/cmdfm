@@ -7,21 +7,20 @@
 #
 listGenres() {
 	echo "
-80s                 Abstract            Acid Jazz           
-Acoustic            Acoustic Rock       African             Alternative         
-Ambient             Americana           Arabic              Avantgarde          
-Bachata             Ballads             Bhangra             Blues               
-Blues Rock          Bossa Nova          Breakbeats          Chanson             
-Chillout            Chiptunes           Choir               Classic Rock        
-Classical           Classical Guitar    Contemporary        Country             
-Cumbia              Dance               Dancehall           Death Metal         
-Dirty South         Disco               Dream Pop           Drum & Bass         
-Dub                 Dubstep             Easy Listening      Electro House       
-Electronic          Electronic Pop      Electronic Rock     Folk                
-Folk Rock           Funk                Glitch              Gospel              
-Grime               Grindcore           Grunge              Hard Rock           
-Hardcore            Heavy Metal         Hip-Hop             House               
-Indie               Indie Pop           Industrial Metal    Instrumental        
+80s                 Acid Jazz           Acoustic            
+Acoustic Rock       African             Alternative         Ambient             
+Americana           Arabic              Avantgarde          Bachata             
+Bhangra             Blues               Blues Rock          Bossa Nova          
+Chanson             Chillout            Chiptunes           Choir               
+Classic Rock        Classical           Classical Guitar    Contemporary        
+Country             Cumbia              Dance               Dancehall           
+Death Metal         Dirty South         Disco               Dream Pop           
+Drum & Bass         Dub                 Dubstep             Easy Listening      
+Electro House       Electronic          Electronic Pop      Electronic Rock     
+Folk                Folk Rock           Funk                Glitch              
+Gospel              Grime               Grindcore           Grunge              
+Hard Rock           Hardcore            Heavy Metal         Hip-Hop             
+House               Indie               Indie Pop           Industrial Metal    
 Instrumental Rock   J-Pop               Jazz                Jazz Funk           
 Jazz Fusion         K-Pop               Latin               Latin Jazz          
 Mambo               Metalcore           Middle Eastern      Minimal             
@@ -33,7 +32,7 @@ Reggae              Reggaeton           Riddim              Rock
 Rock 'n' Roll       Salsa               Samba               Shoegaze            
 Singer / Songwriter Smooth Jazz         Soul                Synth Pop           
 Tech House          Techno              Thrash Metal        Trance              
-Trap                Trip-hop            Turntablism         Underground        
+Trap                Trip-hop            Turntablism                 
 "
 printf "\n"
 }
