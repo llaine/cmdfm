@@ -112,7 +112,7 @@ case $arg1 in
 				    	echo "pause" > /tmp/mplayer-control
 				    elif [[ $REPLY = "d" ]]; then
 				    	urlSong=`./getUrlSong.sh $title`
-						./download.sh $urlSong
+						./download.sh $urlSong 
 				    elif [[ $REPLY = "n" ]]; then
 				    	echo "quit" > /tmp/mplayer-control
 				    	echo "Fetching next song ..."
