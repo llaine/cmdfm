@@ -7,7 +7,7 @@ do
 	title=`echo "$titles" | sed -n "$songid"p`
 	echo "[+] Downloading $title..."
 	url=`echo "$songs" | sed -n "$songid"p`
-	curl -C - -s -L --user-agent 'Mozilla/5.0' -o "$title.mp3" $url; || echo "Sorry i failed, try to copy the song name and search on internet."
+	curl -C - -s -L --user-agent 'Mozilla/5.0' -o "$title.mp3" $url || echo "Sorry i failed, try to copy the song name and search on internet."
 	echo "[i] Download finish !"
 	if [[ -e "download" ]]; then
 		mv "$title.mp3" download/
