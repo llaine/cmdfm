@@ -18,6 +18,15 @@ Run the script
 `chmod +x main.sh`
 `./main.sh [genre]`
 
+Add to your `.bashrc` to use it from everywhere : 
+`
+function cmdfm()
+{
+  sh /path/to/main.sh "$1"
+}
+`
+
+
 **LIST OF GENRES**
 
 `.main.sh g`
