@@ -19,12 +19,12 @@ Run the script
 `./main.sh [genre]`
 
 Add to your `.bashrc` to use it from everywhere : 
-`
+```bash
 function cmdfm()
 {
   sh /path/to/main.sh "$1"
 }
-`
+```
 
 
 **LIST OF GENRES**

@@ -46,21 +46,14 @@ printf "\n"
 }
 
 action() {
-	echo "
-Welcome to the CLI jukebox ! 
 
-Here are the available commands :
-+-------------------------+
-|p => Pause the track     |
-+-------------------------+
-|s => Exit the jukebox    |
-+-------------------------+
-|d => To download the song|
-+-------------------------+
-|n => Next song           |
-+-------------------------+
-"
+echo "======= JUKEBOX CMD.FM ========"
+echo "p  # pause "
+echo "s  # exit "
+echo "d  # download "
+echo "n  # next"
 printf "\n"
+
 }
 
 #Check the evt
