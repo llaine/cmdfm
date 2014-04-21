@@ -137,7 +137,7 @@ function main {
 	fi
 	argv=$1
 	argc=$#
-	argvGenre=$2
+	[[ -z $3 ]] && argvGenre=$2 || argvGenre=$(replace $2 $3) ; selectedStyle="$2 $3"
 	case $argv in
 		"-a" )
 			genres
@@ -148,24 +148,24 @@ function main {
 				exit 1
 			fi
 			informations=`getSongFromStyle $argvGenre`
-			if [[ $informations = "||||||" ]]; then
+			if [[ $informations = "||||||||" ]]; then
 				printf "\n"
-				echo "$BLUE [!]$RESET The $YELLOW $argvGenre $RESET genre doesn't exit"
+				echo "$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
 				echo "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres"
 				printf "\n"
 				exit 1
 			fi
 			header 
-			echo "Playlist created ==> $YELLOW $argvGenre $RESET"
+			echo "Playlist created ==> $YELLOW $selectedStyle $RESET"
 			echo ""
 			echo ""
-			action $argvGenre
+			action "$selectedStyle"
 			while [[ true ]]; do
 				informations=`getSongFromStyle $argvGenre`
 				#echo $informations
 				if [[ $informations = "||||||" ]]; then
 					printf "\n"
-					echo "$BLUE [!]$RESET The $YELLOW $argvGenre $RESET genre doesn't exit"
+					echo "$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
 					echo "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres"
 					printf "\n"
 					exit 1
