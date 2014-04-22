@@ -1,6 +1,6 @@
 # Native bash Jukebox based on cmd.fm
 
-[Jukebox](![alt tag](https://raw.github.com/llaine/cmdfm/master/img.png)
+![alt tag](https://raw.github.com/llaine/cmdfm/master/img.png)
 
 ## How to 
 
