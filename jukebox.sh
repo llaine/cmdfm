@@ -71,13 +71,21 @@ function action {
 	echo "+---------------------------------------------+"
 	echo "$RED p $RESET $CYAN  # Pause.$RESET"
 	echo "$RED n $RESET $CYAN  # Next song in the$YELLOW $1$RESET$CYAN playlist. $RESET"
+	echo "$RED g $RESET $CYAN  # Switch to genre.. $RESET"
 	echo "$RED e $RESET $CYAN  # Exit the Jukebox. $RESET"
 	echo "$RED m $RESET $CYAN  # Display mini menu $RESET"
 	echo "+---------------------------------------------+"
 }
 
+title=
+genre=
+streamUrl=
+length=
+durationSecondes=
+pidofMPlayer=
+
 function actionMini {
-	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED e $RESET--> exit "
+	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED g $RESET--> genre | $RED e $RESET--> exit "
 }
 
 # replace all blank space in string by %20 for web query
@@ -129,6 +137,32 @@ function usage {
 	printf "\n"
 }
 
+runloop () {
+
+	while [[ true ]]; do
+		read -p "> " -t$durationSecondes
+		printf "\n"
+	   	if [[ $REPLY = "e" ]]; then
+	   		quit
+			break 2
+	    elif [[ $REPLY = "p" ]]; then
+	    	echo "pause" > /tmp/mplayer-control
+	    elif [[ $REPLY = "d" ]]; then
+	    	echo "Not currently available"
+	    	#urlSong=`./getUrlSong.sh $title`
+			#./download.sh $urlSong
+	    elif [[ $REPLY = "n" ]]; then
+	    	echo "quit" > /tmp/mplayer-control
+	    	echo "Fetching next song ..."
+			break 1
+		elif [[ $REPLY = "m" ]]; then
+			actionMini
+		else
+			echo "quit" > /tmp/mplayer-control
+	   		break 1
+			fi
+	done
+}
 
 function main {
 	if [[ -z $1 ]]; then
@@ -190,29 +224,7 @@ function main {
 					echo "$GREEN Description :$RESET $YELLOW $descr $RESET"
 					echo ""
 				fi
-				while [[ true ]]; do
-					read -p "> " -t$durationSecondes
-					printf "\n"
-			    	if [[ $REPLY = "e" ]]; then
-			    		quit
-						break 2
-				    elif [[ $REPLY = "p" ]]; then
-				    	echo "pause" > /tmp/mplayer-control
-				    elif [[ $REPLY = "d" ]]; then
-				    	echo "Not currently available"
-				    	#urlSong=`./getUrlSong.sh $title`
-						#./download.sh $urlSong 
-				    elif [[ $REPLY = "n" ]]; then
-				    	echo "quit" > /tmp/mplayer-control
-				    	echo "Fetching next song ..."
-						break 1
-					elif [[ $REPLY = "m" ]]; then
-						actionMini
-					else
-						echo "quit" > /tmp/mplayer-control
-			    		break 1
-			    	fi
-				done
+				runloop
 			done
 			;;
 	esac
