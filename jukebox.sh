@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Jukebox for native terminal 
-# 
+# Jukebox for native terminal
+#
 # Made by darksioul6@gmail.com
 # https://github.com/llaine/cmdfm
-# Fork me ! 
+# Fork me !
 
 
 # COLOR FOR PROMPT UI
@@ -16,15 +16,22 @@ CYAN="$(tput setaf 6)"
 RESET="$(tput sgr0)"
 UNDERLINE="$(tput smul)"
 
+title=
+genre=
+streamUrl=
+length=
+durationSecondes=
+pidofMPlayer=
+
 function header {
 	clear
 	echo $GREEN"
-   __        _        _               
+   __        _        _
    \ \ _   _| | _____| |__   _____  __
     \ \ | | | |/ / _ \ '_ \ / _ \ \/ /
- /\_/ / |_| |   <  __/ |_) | (_) >  < 
+ /\_/ / |_| |   <  __/ |_) | (_) >  <
  \___/ \__,_|_|\_\___|_.__/ \___/_/\_\ v 1.3
-                              
+
 	" $RESET
 	echo "$MAGENTA Brought to you by darksioul with <3 & Freedom. $RESET"
 	echo ""
@@ -35,32 +42,32 @@ function genres {
 
 $GREEN $UNDERLINE Available genres $RESET
 $YELLOW
-80s                 Acid Jazz           Acoustic            
-Acoustic Rock       African             Alternative         Ambient             
-Americana           Arabic              Avantgarde          Bachata             
-Bhangra             Blues               Blues Rock          Bossa Nova          
-Chanson             Chillout            Chiptunes           Choir               
-Classic Rock        Classical           Classical Guitar    Contemporary        
-Country             Cumbia              Dance               Dancehall           
-Death Metal         Dirty South         Disco               Dream Pop           
-Drum & Bass         Dub                 Dubstep             Easy Listening      
-Electro House       Electronic          Electronic Pop      Electronic Rock     
-Folk                Folk Rock           Funk                Glitch              
-Gospel              Grime               Grindcore           Grunge              
-Hard Rock           Hardcore            Heavy Metal         Hip-Hop             
-House               Indie               Indie Pop           Industrial Metal    
-Instrumental Rock   J-Pop               Jazz                Jazz Funk           
-Jazz Fusion         K-Pop               Latin               Latin Jazz          
-Mambo               Metalcore           Middle Eastern      Minimal             
-Modern Jazz         Moombahton          New Wave            Nu Jazz             
-Opera               Orchestral          Piano               Pop                 
-Post Hardcore       Post Rock           Progressive House   Progressive Metal   
-Progressive Rock    Punk                R&B                 Rap                 
-Reggae              Reggaeton           Riddim              Rock                
-Rock 'n' Roll       Salsa               Samba               Shoegaze            
-Singer / Songwriter Smooth Jazz         Soul                Synth Pop           
-Tech House          Techno              Thrash Metal        Trance              
-Trap                Trip-hop            Turntablism         
+80s                 Acid Jazz           Acoustic
+Acoustic Rock       African             Alternative         Ambient
+Americana           Arabic              Avantgarde          Bachata
+Bhangra             Blues               Blues Rock          Bossa Nova
+Chanson             Chillout            Chiptunes           Choir
+Classic Rock        Classical           Classical Guitar    Contemporary
+Country             Cumbia              Dance               Dancehall
+Death Metal         Dirty South         Disco               Dream Pop
+Drum & Bass         Dub                 Dubstep             Easy Listening
+Electro House       Electronic          Electronic Pop      Electronic Rock
+Folk                Folk Rock           Funk                Glitch
+Gospel              Grime               Grindcore           Grunge
+Hard Rock           Hardcore            Heavy Metal         Hip-Hop
+House               Indie               Indie Pop           Industrial Metal
+Instrumental Rock   J-Pop               Jazz                Jazz Funk
+Jazz Fusion         K-Pop               Latin               Latin Jazz
+Mambo               Metalcore           Middle Eastern      Minimal
+Modern Jazz         Moombahton          New Wave            Nu Jazz
+Opera               Orchestral          Piano               Pop
+Post Hardcore       Post Rock           Progressive House   Progressive Metal
+Progressive Rock    Punk                R&B                 Rap
+Reggae              Reggaeton           Riddim              Rock
+Rock 'n' Roll       Salsa               Samba               Shoegaze
+Singer / Songwriter Smooth Jazz         Soul                Synth Pop
+Tech House          Techno              Thrash Metal        Trance
+Trap                Trip-hop            Turntablism
 $RESET
 --------------------------------------------------------------------------------
 Usage :$RED ./cmdfm -g minimal $RESET
@@ -71,17 +78,18 @@ function action {
 	echo "+---------------------------------------------+"
 	echo "$RED p $RESET $CYAN  # Pause.$RESET"
 	echo "$RED n $RESET $CYAN  # Next song in the$YELLOW $1$RESET$CYAN playlist. $RESET"
+	echo "$RED g $RESET $CYAN  # Switch to genre.. $RESET"
 	echo "$RED e $RESET $CYAN  # Exit the Jukebox. $RESET"
 	echo "$RED m $RESET $CYAN  # Display mini menu $RESET"
 	echo "+---------------------------------------------+"
 }
 
 function actionMini {
-	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED e $RESET--> exit "
+	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED g $RESET--> genre | $RED e $RESET--> exit "
 }
 
 # replace all blank space in string by %20 for web query
-function replace { 
+function replace {
 	STR="$@"
 	OUTPUT=`echo $STR | sed 's/ /%20/g'`
 	echo $OUTPUT
@@ -114,7 +122,7 @@ function getSongFromStyle {
 	echo $theReturn
 }
 
-function play {	
+function play {
 	streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
 	mkfifo /tmp/mplayer-control &>/dev/null
 	mplayer -slave -quiet -input file=/tmp/mplayer-control $streamUrl &>/dev/null &
@@ -129,6 +137,32 @@ function usage {
 	printf "\n"
 }
 
+runloop () {
+
+	while [[ true ]]; do
+		read -p "> " -t$durationSecondes
+		printf "\n"
+	   	if [[ $REPLY = "e" ]]; then
+	   		quit
+			break 2
+	    elif [[ $REPLY = "p" ]]; then
+	    	echo "pause" > /tmp/mplayer-control
+	    elif [[ $REPLY = "d" ]]; then
+	    	echo "Not currently available"
+	    	#urlSong=`./getUrlSong.sh $title`
+			#./download.sh $urlSong
+	    elif [[ $REPLY = "n" ]]; then
+	    	echo "quit" > /tmp/mplayer-control
+	    	echo "Fetching next song ..."
+			break 1
+		elif [[ $REPLY = "m" ]]; then
+			actionMini
+		else
+			echo "quit" > /tmp/mplayer-control
+	   		break 1
+			fi
+	done
+}
 
 function main {
 	if [[ -z $1 ]]; then
@@ -144,7 +178,7 @@ function main {
 			;;
 		"-g")
 			if [[ -z $argvGenre ]]; then
-				usage 
+				usage
 				exit 1
 			fi
 			informations=`getSongFromStyle $argvGenre`
@@ -155,7 +189,7 @@ function main {
 				printf "\n"
 				exit 1
 			fi
-			header 
+			header
 			echo "Playlist created ==> $YELLOW $selectedStyle $RESET"
 			echo ""
 			echo ""
@@ -177,8 +211,8 @@ function main {
 				streamUrl="${songInfo[4]}"
 				length="${songInfo[6]}"
 				durationSecondes=$(($length / 1000 ))
-				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}" 
-				
+				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}"
+
 				play $streamUrl #Streaming url
 				pidofMPlayer=$(pgrep mplayer)
 				if [[ -z $pidofMPlayer ]]; then
@@ -190,29 +224,7 @@ function main {
 					echo "$GREEN Description :$RESET $YELLOW $descr $RESET"
 					echo ""
 				fi
-				while [[ true ]]; do
-					read -p "> " -t$durationSecondes
-					printf "\n"
-			    	if [[ $REPLY = "e" ]]; then
-			    		quit
-						break 2
-				    elif [[ $REPLY = "p" ]]; then
-				    	echo "pause" > /tmp/mplayer-control
-				    elif [[ $REPLY = "d" ]]; then
-				    	echo "Not currently available"
-				    	#urlSong=`./getUrlSong.sh $title`
-						#./download.sh $urlSong 
-				    elif [[ $REPLY = "n" ]]; then
-				    	echo "quit" > /tmp/mplayer-control
-				    	echo "Fetching next song ..."
-						break 1
-					elif [[ $REPLY = "m" ]]; then
-						actionMini
-					else
-						echo "quit" > /tmp/mplayer-control
-			    		break 1
-			    	fi
-				done
+				runloop
 			done
 			;;
 	esac
