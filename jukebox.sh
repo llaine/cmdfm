@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Jukebox for native terminal 
-# 
+# Jukebox for native terminal
+#
 # Made by darksioul6@gmail.com
 # https://github.com/llaine/cmdfm
-# Fork me ! 
+# Fork me !
 
 
 # COLOR FOR PROMPT UI
@@ -19,48 +19,45 @@ UNDERLINE="$(tput smul)"
 function header {
 	clear
 	echo $GREEN"
-   __        _        _               
+   __        _        _
    \ \ _   _| | _____| |__   _____  __
     \ \ | | | |/ / _ \ '_ \ / _ \ \/ /
- /\_/ / |_| |   <  __/ |_) | (_) >  < 
+ /\_/ / |_| |   <  __/ |_) | (_) >  <
  \___/ \__,_|_|\_\___|_.__/ \___/_/\_\ v 1.3
-                              
+
 	" $RESET
-	echo "$MAGENTA Brought to you by darksioul with <3 & Freedom. $RESET"
-	echo ""
+	echo "$MAGENTA Brought to you by darksioul with <3 & Freedom. $RESET\n"
 }
 
 function genres {
-	echo "
-
-$GREEN $UNDERLINE Available genres $RESET
-$YELLOW
-80s                 Acid Jazz           Acoustic            
-Acoustic Rock       African             Alternative         Ambient             
-Americana           Arabic              Avantgarde          Bachata             
-Bhangra             Blues               Blues Rock          Bossa Nova          
-Chanson             Chillout            Chiptunes           Choir               
-Classic Rock        Classical           Classical Guitar    Contemporary        
-Country             Cumbia              Dance               Dancehall           
-Death Metal         Dirty South         Disco               Dream Pop           
-Drum & Bass         Dub                 Dubstep             Easy Listening      
-Electro House       Electronic          Electronic Pop      Electronic Rock     
-Folk                Folk Rock           Funk                Glitch              
-Gospel              Grime               Grindcore           Grunge              
-Hard Rock           Hardcore            Heavy Metal         Hip-Hop             
-House               Indie               Indie Pop           Industrial Metal    
-Instrumental Rock   J-Pop               Jazz                Jazz Funk           
-Jazz Fusion         K-Pop               Latin               Latin Jazz          
-Mambo               Metalcore           Middle Eastern      Minimal             
-Modern Jazz         Moombahton          New Wave            Nu Jazz             
-Opera               Orchestral          Piano               Pop                 
-Post Hardcore       Post Rock           Progressive House   Progressive Metal   
-Progressive Rock    Punk                R&B                 Rap                 
-Reggae              Reggaeton           Riddim              Rock                
-Rock 'n' Roll       Salsa               Samba               Shoegaze            
-Singer / Songwriter Smooth Jazz         Soul                Synth Pop           
-Tech House          Techno              Thrash Metal        Trance              
-Trap                Trip-hop            Turntablism         
+	echo -e "\n
+$GREEN $UNDERLINE Available genres $RESET$YELLOW\n
+80s                 Acid Jazz           Acoustic
+Acoustic Rock       African             Alternative         Ambient
+Americana           Arabic              Avantgarde          Bachata
+Bhangra             Blues               Blues Rock          Bossa Nova
+Chanson             Chillout            Chiptunes           Choir
+Classic Rock        Classical           Classical Guitar    Contemporary
+Country             Cumbia              Dance               Dancehall
+Death Metal         Dirty South         Disco               Dream Pop
+Drum & Bass         Dub                 Dubstep             Easy Listening
+Electro House       Electronic          Electronic Pop      Electronic Rock
+Folk                Folk Rock           Funk                Glitch
+Gospel              Grime               Grindcore           Grunge
+Hard Rock           Hardcore            Heavy Metal         Hip-Hop
+House               Indie               Indie Pop           Industrial Metal
+Instrumental Rock   J-Pop               Jazz                Jazz Funk
+Jazz Fusion         K-Pop               Latin               Latin Jazz
+Mambo               Metalcore           Middle Eastern      Minimal
+Modern Jazz         Moombahton          New Wave            Nu Jazz
+Opera               Orchestral          Piano               Pop
+Post Hardcore       Post Rock           Progressive House   Progressive Metal
+Progressive Rock    Punk                R&B                 Rap
+Reggae              Reggaeton           Riddim              Rock
+Rock 'n' Roll       Salsa               Samba               Shoegaze
+Singer / Songwriter Smooth Jazz         Soul                Synth Pop
+Tech House          Techno              Thrash Metal        Trance
+Trap                Trip-hop            Turntablism
 $RESET
 --------------------------------------------------------------------------------
 Usage :$RED ./cmdfm -g minimal $RESET
@@ -89,7 +86,7 @@ function actionMini {
 }
 
 # replace all blank space in string by %20 for web query
-function replace { 
+function replace {
 	STR="$@"
 	OUTPUT=`echo $STR | sed 's/ /%20/g'`
 	echo $OUTPUT
@@ -97,8 +94,7 @@ function replace {
 
 function quit {
 	echo "quit" > /tmp/mplayer-control
-	echo "$MAGENTA Bye ! $RESET Repo : $YELLOW https://github.com/llaine/cmdfm $RESET"
-	echo ""
+	echo "$MAGENTA Bye ! $RESET Repo : $YELLOW https://github.com/llaine/cmdfm $RESET\n"
 }
 
 # get song's
@@ -122,7 +118,7 @@ function getSongFromStyle {
 	echo $theReturn
 }
 
-function play {	
+function play {
 	streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
 	mkfifo /tmp/mplayer-control &>/dev/null
 	mplayer -slave -quiet -input file=/tmp/mplayer-control $streamUrl &>/dev/null &
@@ -130,11 +126,9 @@ function play {
 
 # Usage function
 function usage {
-	echo "$GREEN $UNDERLINE USAGE (argv) :$RESET "
-	printf "\n"
-	echo "$RED -a $RESET 	    # display all the$RED musical genre $RESET."
-	echo "$RED -g $RESET$YELLOW<style>$RESET # launch a playlist the selected musical genre."
-	printf "\n"
+	echo -e "$GREEN $UNDERLINE USAGE (argv) :$RESET\n"
+	echo -e "$RED -a $RESET 	    # display all the$RED musical genre$RESET."
+	echo -e "$RED -g $RESET$YELLOW<style>$RESET # launch a playlist the selected musical genre.\n"
 }
 
 runloop () {
@@ -178,30 +172,24 @@ function main {
 			;;
 		"-g")
 			if [[ -z $argvGenre ]]; then
-				usage 
+				usage
 				exit 1
 			fi
 			informations=`getSongFromStyle $argvGenre`
 			if [[ $informations = "||||||||" ]]; then
-				printf "\n"
-				echo "$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
-				echo "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres"
-				printf "\n"
+				echo "\n$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
+				echo "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres\n"
 				exit 1
 			fi
-			header 
-			echo "Playlist created ==> $YELLOW $selectedStyle $RESET"
-			echo ""
-			echo ""
+			header
+			echo "Playlist created ==> $YELLOW $selectedStyle $RESET\n\n"
 			action "$selectedStyle"
 			while [[ true ]]; do
 				informations=`getSongFromStyle $argvGenre`
 				#echo $informations
 				if [[ $informations = "||||||" ]]; then
-					printf "\n"
-					echo "$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
-					echo "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres"
-					printf "\n"
+					echo -e "\n$BLUE [!]$RESET The $YELLOW $selectedStyle $RESET genre doesn't exit"
+					echo -e "$BLUE [!]$RESET$RED -a $RESET to display the genre available genres\n"
 					exit 1
 				fi
 
@@ -211,8 +199,8 @@ function main {
 				streamUrl="${songInfo[4]}"
 				length="${songInfo[6]}"
 				durationSecondes=$(($length / 1000 ))
-				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}" 
-				
+				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}"
+
 				play $streamUrl #Streaming url
 				pidofMPlayer=$(pgrep mplayer)
 				if [[ -z $pidofMPlayer ]]; then
@@ -221,8 +209,7 @@ function main {
 				else
 					echo "$GREEN Now Playing :$RESET $YELLOW $title $RESET"
 					echo "$GREEN Main genre  :$RESET $YELLOW $genre $RESET"
-					echo "$GREEN Description :$RESET $YELLOW $descr $RESET"
-					echo ""
+					echo -e "$GREEN Description :$RESET $YELLOW $descr $RESET\n"
 				fi
 				runloop
 			done
