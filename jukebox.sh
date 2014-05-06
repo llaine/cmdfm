@@ -25,8 +25,8 @@ function header {
  /\_/ / |_| |   <  __/ |_) | (_) >  <
  \___/ \__,_|_|\_\___|_.__/ \___/_/\_\ v 1.3
 
-	" $RESET
-	echo "$MAGENTA Brought to you by darksioul with <3 & Freedom. $RESET\n"
+ "$RESET$MAGENTA"Brought to you by darksioul with <3 & Freedom. " $RESET
+printf "\n\n\n"
 }
 
 function genres {
@@ -67,19 +67,12 @@ Usage :$RED ./cmdfm -g minimal $RESET
 function action {
 	echo "+---------------------------------------------+"
 	echo "$RED p $RESET $CYAN  # Pause.$RESET"
-	echo "$RED n $RESET $CYAN  # Next song in the$YELLOW $1$RESET$CYAN playlist. $RESET"
-	echo "$RED g $RESET $CYAN  # Switch to genre.. $RESET"
+	echo "$RED n $RESET $CYAN  # Next song in the $YELLOW$1$RESET$CYAN playlist. $RESET"
+	#echo "$RED g $RESET $CYAN  # Switch to genre.. $RESET"
 	echo "$RED e $RESET $CYAN  # Exit the Jukebox. $RESET"
 	echo "$RED m $RESET $CYAN  # Display mini menu $RESET"
 	echo "+---------------------------------------------+"
 }
-
-title=
-genre=
-streamUrl=
-length=
-durationSecondes=
-pidofMPlayer=
 
 function actionMini {
 	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED g $RESET--> genre | $RED e $RESET--> exit "
@@ -182,7 +175,7 @@ function main {
 				exit 1
 			fi
 			header
-			echo "Playlist created ==> $YELLOW $selectedStyle $RESET\n\n"
+			#echo "Playlist created -> $YELLOW $selectedStyle $RESET"
 			action "$selectedStyle"
 			while [[ true ]]; do
 				informations=`getSongFromStyle $argvGenre`
