@@ -7,14 +7,16 @@
 
 
 # COLOR FOR PROMPT UI
-RED="$(tput setaf 1)"
-GREEN="$(tput setaf 2)"
-YELLOW="$(tput setaf 3)"
-BLUE="$(tput setaf 4)"
-MAGENTA="$(tput setaf 5)"
-CYAN="$(tput setaf 6)"
-RESET="$(tput sgr0)"
-UNDERLINE="$(tput smul)"
+readonly RED="$(tput setaf 1)"
+readonly GREEN="$(tput setaf 2)"
+readonly YELLOW="$(tput setaf 3)"
+readonly BLUE="$(tput setaf 4)"
+readonly MAGENTA="$(tput setaf 5)"
+readonly CYAN="$(tput setaf 6)"
+readonly RESET="$(tput sgr0)"
+readonly UNDERLINE="$(tput smul)"
+
+readonly ARGS="$@"
 
 header() {
 	clear
@@ -26,7 +28,7 @@ header() {
  \___/ \__,_|_|\_\___|_.__/ \___/_/\_\ v 1.3
 
  "$RESET$MAGENTA"Brought to you by darksioul with <3 & Freedom. " $RESET
-printf "\n\n\n"
+	printf "\n\n\n"
 }
 
 genres() {
@@ -125,7 +127,6 @@ usage() {
 }
 
 runloop () {
-
 	while [[ true ]]; do
 		read -p "> " -t$durationSecondes
 		printf "\n"
@@ -215,4 +216,4 @@ main() {
 # 	echo -ne "$length \r"
 # done
 
-main $@
+main $ARGS
