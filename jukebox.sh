@@ -16,7 +16,7 @@ CYAN="$(tput setaf 6)"
 RESET="$(tput sgr0)"
 UNDERLINE="$(tput smul)"
 
-function header {
+header() {
 	clear
 	echo $GREEN"
    __        _        _
@@ -29,7 +29,7 @@ function header {
 printf "\n\n\n"
 }
 
-function genres {
+genres() {
 	echo -e "\n
 $GREEN $UNDERLINE Available genres $RESET$YELLOW\n
 80s                 Acid Jazz           Acoustic
@@ -64,7 +64,7 @@ Usage :$RED ./cmdfm -g minimal $RESET
 	"
 }
 
-function action {
+action() {
 	echo "+---------------------------------------------+"
 	echo "$RED p $RESET $CYAN  # Pause.$RESET"
 	echo "$RED n $RESET $CYAN  # Next song in the $YELLOW$1$RESET$CYAN playlist. $RESET"
@@ -74,18 +74,18 @@ function action {
 	echo "+---------------------------------------------+"
 }
 
-function actionMini {
+actionMini() {
 	echo "$RED p $RESET--> pause | $RED n $RESET--> next | $RED g $RESET--> genre | $RED e $RESET--> exit "
 }
 
 # replace all blank space in string by %20 for web query
-function replace {
+replace() {
 	STR="$@"
 	OUTPUT=`echo $STR | sed 's/ /%20/g'`
 	echo $OUTPUT
 }
 
-function quit {
+quit() {
 	echo "quit" > /tmp/mplayer-control
 	echo "$MAGENTA Bye ! $RESET Repo : $YELLOW https://github.com/llaine/cmdfm $RESET\n"
 }
@@ -96,7 +96,7 @@ function quit {
 #	stream_url
 #	duration
 # from a style
-function getSongFromStyle {
+getSongFromStyle() {
 	theGenre="$@"
 	theGenre=`replace $theGenre`
 	url="https://cmd.fm/api/tracks/search/?genre=$theGenre&limit=1"
@@ -111,14 +111,14 @@ function getSongFromStyle {
 	echo $theReturn
 }
 
-function play {
+play() {
 	streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
 	mkfifo /tmp/mplayer-control &>/dev/null
 	mplayer -slave -quiet -input file=/tmp/mplayer-control $streamUrl &>/dev/null &
 }
 
 # Usage function
-function usage {
+usage() {
 	echo -e "$GREEN $UNDERLINE USAGE (argv) :$RESET\n"
 	echo -e "$RED -a $RESET 	    # display all the$RED musical genre$RESET."
 	echo -e "$RED -g $RESET$YELLOW<style>$RESET # launch a playlist the selected musical genre.\n"
@@ -151,7 +151,7 @@ runloop () {
 	done
 }
 
-function main {
+main() {
 	if [[ -z $1 ]]; then
 		usage
 		exit 1
@@ -216,5 +216,3 @@ function main {
 # done
 
 main $@
-#play http://api.soundcloud.com/tracks/116269654/stream
-#pgrep mplayer
