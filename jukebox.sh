@@ -194,6 +194,7 @@ main() {
 				length="${songInfo[6]}"
 				durationSecondes=$(($length / 1000 ))
 				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}"
+
 				play $streamUrl #Streaming url
 				pidofMPlayer=$(pgrep mplayer)
 				if [[ -z $pidofMPlayer ]]; then
