@@ -114,7 +114,7 @@ getSongFromStyle() {
 }
 
 play() {
-	streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
+	# streamUrl="$@?client_id=2cd0c4a7a6e5992167a4b09460d85ece"
 	mkfifo /tmp/mplayer-control &>/dev/null
 	mplayer -slave -quiet -input file=/tmp/mplayer-control $streamUrl &>/dev/null &
 }
@@ -191,6 +191,7 @@ main() {
 				title="${songInfo[0]}"
 				genre="${songInfo[2]}"
                 streamUrl=$(curl -s "${songInfo[4]}?client_id=2cd0c4a7a6e5992167a4b09460d85ece" | perl -wnE'say /location":"(.*)"/g' | sed 's/https/http/g')
+				
 				length="${songInfo[6]}"
 				durationSecondes=$(($length / 1000 ))
 				[[ -z "${songInfo[8]}" ]] && descr="empty" || descr="${songInfo[8]}"
@@ -215,5 +216,6 @@ main() {
 # 	length+='#'
 # 	echo -ne "$length \r"
 # done
+
 
 main $ARGS
